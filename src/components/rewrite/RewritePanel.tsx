@@ -13,7 +13,8 @@ export function RewritePanel() {
     runRewrite,
     setCurrentPrompt,
     setNewPrompt,
-    apiKey
+    apiKey,
+    darkMode
   } = useAppStore();
 
   const [copied, setCopied] = useState(false);
@@ -97,11 +98,11 @@ export function RewritePanel() {
   const panelContent = (
     <>
       {rewriteError && (
-        <div className="m-4 p-3 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2">
+        <div className="m-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl flex items-start gap-2">
           <AlertCircle className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" />
-          <div className="text-sm text-red-700">
+          <div className="text-sm text-red-700 dark:text-red-400">
             <p className="font-medium">Rewrite failed</p>
-            <p className="text-red-600">{rewriteError}</p>
+            <p className="text-red-600 dark:text-red-500">{rewriteError}</p>
           </div>
         </div>
       )}
@@ -112,12 +113,12 @@ export function RewritePanel() {
             <div className="text-center space-y-2">
               <p className="font-medium">Requirements to rewrite:</p>
               <ul className="text-xs space-y-1">
-                {!improvements && <li className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-zinc-300" />Complete Step 1 (Analysis) first</li>}
-                {!apiKey && <li className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-zinc-300" />API Key (sidebar)</li>}
+                {!improvements && <li className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-600" />Complete Step 1 (Analysis) first</li>}
+                {!apiKey && <li className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-600" />API Key (sidebar)</li>}
               </ul>
             </div>
           ) : (
-            <span className="text-zinc-500">Click "Apply Improvements" to generate the new prompt</span>
+            <span className="text-zinc-500 dark:text-zinc-400">Click "Apply Improvements" to generate the new prompt</span>
           )}
         </div>
       )}
@@ -127,12 +128,12 @@ export function RewritePanel() {
           <div className="text-center space-y-4">
             {/* Skeleton loading */}
             <div className="space-y-3 animate-pulse w-64">
-              <div className="h-4 bg-indigo-100 rounded-full w-full" />
-              <div className="h-4 bg-indigo-100 rounded-full w-5/6" />
-              <div className="h-4 bg-indigo-100 rounded-full w-4/5" />
-              <div className="h-4 bg-indigo-100 rounded-full w-3/4" />
+              <div className="h-4 bg-indigo-100 dark:bg-indigo-900/50 rounded-full w-full" />
+              <div className="h-4 bg-indigo-100 dark:bg-indigo-900/50 rounded-full w-5/6" />
+              <div className="h-4 bg-indigo-100 dark:bg-indigo-900/50 rounded-full w-4/5" />
+              <div className="h-4 bg-indigo-100 dark:bg-indigo-900/50 rounded-full w-3/4" />
             </div>
-            <p className="text-sm text-zinc-500">Rewriting your prompt...</p>
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">Rewriting your prompt...</p>
           </div>
         </div>
       )}
@@ -141,15 +142,15 @@ export function RewritePanel() {
         <div className={`p-4 space-y-4 ${isExpanded ? 'p-6' : ''}`}>
           {/* Inline Diff View */}
           <div>
-            <h4 className="text-sm font-medium text-zinc-700 mb-2">
+            <h4 className="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
               Changes (Inline Diff)
             </h4>
-            <div className={`border border-zinc-200 rounded-xl overflow-hidden text-sm shadow-sm ${isExpanded ? 'max-h-[50vh] overflow-y-auto' : ''}`}>
+            <div className={`border border-zinc-200 dark:border-zinc-600 rounded-xl overflow-hidden text-sm shadow-sm ${isExpanded ? 'max-h-[50vh] overflow-y-auto' : ''}`}>
               <ReactDiffViewer
                 oldValue={currentPrompt}
                 newValue={newPrompt}
                 splitView={false}
-                useDarkTheme={false}
+                useDarkTheme={darkMode}
                 compareMethod={DiffMethod.WORDS}
                 styles={{
                   contentText: {
@@ -167,11 +168,11 @@ export function RewritePanel() {
 
           {/* New Prompt (Copyable) */}
           <div>
-            <h4 className="text-sm font-medium text-zinc-700 mb-2">
+            <h4 className="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
               New Prompt (Ready to Copy)
             </h4>
             <div className="relative">
-              <pre className={`p-4 bg-indigo-50/50 border border-indigo-200 rounded-xl text-sm font-mono whitespace-pre-wrap overflow-x-auto shadow-sm ${isExpanded ? 'max-h-[30vh]' : 'max-h-48'}`}>
+              <pre className={`p-4 bg-indigo-50/50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800 rounded-xl text-sm font-mono whitespace-pre-wrap overflow-x-auto shadow-sm text-zinc-900 dark:text-zinc-100 ${isExpanded ? 'max-h-[30vh]' : 'max-h-48'}`}>
                 {newPrompt}
               </pre>
             </div>

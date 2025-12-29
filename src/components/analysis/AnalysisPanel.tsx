@@ -28,11 +28,11 @@ export function AnalysisPanel() {
   const panelContent = (
     <>
       {analysisError && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2">
+        <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl flex items-start gap-2">
           <AlertCircle className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" />
-          <div className="text-sm text-red-700">
+          <div className="text-sm text-red-700 dark:text-red-400">
             <p className="font-medium">Analysis failed</p>
-            <p className="text-red-600">{analysisError}</p>
+            <p className="text-red-600 dark:text-red-500">{analysisError}</p>
           </div>
         </div>
       )}
@@ -43,14 +43,14 @@ export function AnalysisPanel() {
             <div className="text-center space-y-2">
               <p className="font-medium">Fill in the required fields to analyze:</p>
               <ul className="text-xs space-y-1">
-                {!goal && <li className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-zinc-300" />Module Goal (sidebar)</li>}
-                {!currentPrompt && <li className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-zinc-300" />Current Prompt</li>}
-                {!currentOutput && <li className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-zinc-300" />Current Output</li>}
-                {!apiKey && <li className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-zinc-300" />API Key (sidebar)</li>}
+                {!goal && <li className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-600" />Module Goal (sidebar)</li>}
+                {!currentPrompt && <li className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-600" />Current Prompt</li>}
+                {!currentOutput && <li className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-600" />Current Output</li>}
+                {!apiKey && <li className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-600" />API Key (sidebar)</li>}
               </ul>
             </div>
           ) : (
-            <span className="text-zinc-500">Click "Analyze Prompt" to generate improvement suggestions</span>
+            <span className="text-zinc-500 dark:text-zinc-400">Click "Analyze Prompt" to generate improvement suggestions</span>
           )}
         </div>
       )}
@@ -60,12 +60,12 @@ export function AnalysisPanel() {
           <div className="text-center space-y-4">
             {/* Skeleton loading */}
             <div className="space-y-3 animate-pulse w-64">
-              <div className="h-4 bg-amber-100 rounded-full w-3/4" />
-              <div className="h-4 bg-amber-100 rounded-full w-full" />
-              <div className="h-4 bg-amber-100 rounded-full w-5/6" />
-              <div className="h-4 bg-amber-100 rounded-full w-2/3" />
+              <div className="h-4 bg-amber-100 dark:bg-amber-900/50 rounded-full w-3/4" />
+              <div className="h-4 bg-amber-100 dark:bg-amber-900/50 rounded-full w-full" />
+              <div className="h-4 bg-amber-100 dark:bg-amber-900/50 rounded-full w-5/6" />
+              <div className="h-4 bg-amber-100 dark:bg-amber-900/50 rounded-full w-2/3" />
             </div>
-            <p className="text-sm text-zinc-500">Analyzing your prompt...</p>
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">Analyzing your prompt...</p>
           </div>
         </div>
       )}

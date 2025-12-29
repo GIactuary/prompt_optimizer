@@ -124,6 +124,23 @@
   .font-mono {
     font-family: 'JetBrains Mono', ui-monospace, 'Cascadia Code', 'Source Code Pro', monospace;
   }
+
+  /* Dark mode scrollbar styling */
+  .dark ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .dark ::-webkit-scrollbar-track {
+    background: rgb(39 39 42); /* zinc-800 */
+    border-radius: 4px;
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    background: rgb(82 82 91); /* zinc-600 */
+    border-radius: 4px;
+  }
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: rgb(113 113 122); /* zinc-500 */
+  }
 }
 
 /* Progress bar animation */

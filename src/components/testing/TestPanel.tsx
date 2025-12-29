@@ -127,21 +127,21 @@ export function TestPanel() {
 
       <div className="flex-1 p-4 overflow-y-auto">
         {testError && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2">
+          <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl flex items-start gap-2">
             <AlertCircle className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" />
-            <div className="text-sm text-red-700">
+            <div className="text-sm text-red-700 dark:text-red-400">
               <p className="font-medium">Test failed</p>
-              <p className="text-red-600">{testError}</p>
+              <p className="text-red-600 dark:text-red-500">{testError}</p>
             </div>
           </div>
         )}
 
         {showPreview && newPrompt && (
           <div className="mb-4">
-            <h4 className="text-sm font-medium text-zinc-700 mb-2">
+            <h4 className="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
               Prompt Preview (with variables substituted)
             </h4>
-            <pre className="p-4 bg-emerald-50/50 border border-emerald-200 rounded-xl text-sm font-mono whitespace-pre-wrap overflow-x-auto max-h-40 shadow-sm">
+            <pre className="p-4 bg-emerald-50/50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-xl text-sm font-mono whitespace-pre-wrap overflow-x-auto max-h-40 shadow-sm text-zinc-900 dark:text-zinc-100">
               {getProcessedPrompt()}
             </pre>
           </div>
@@ -153,12 +153,12 @@ export function TestPanel() {
               <div className="text-center space-y-2">
                 <p className="font-medium">Requirements to test:</p>
                 <ul className="text-xs space-y-1">
-                  {!newPrompt && <li className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-zinc-300" />Complete Step 2 (Rewrite) first</li>}
-                  {!apiKey && <li className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-zinc-300" />API Key (sidebar)</li>}
+                  {!newPrompt && <li className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-600" />Complete Step 2 (Rewrite) first</li>}
+                  {!apiKey && <li className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-600" />API Key (sidebar)</li>}
                 </ul>
               </div>
             ) : (
-              <span className="text-zinc-500">Click "Test New Prompt" to see the output</span>
+              <span className="text-zinc-500 dark:text-zinc-400">Click "Run Test" to see the output</span>
             )}
           </div>
         )}
@@ -168,25 +168,25 @@ export function TestPanel() {
             <div className="text-center space-y-4">
               {/* Skeleton loading */}
               <div className="space-y-3 animate-pulse w-64">
-                <div className="h-4 bg-emerald-100 rounded-full w-full" />
-                <div className="h-4 bg-emerald-100 rounded-full w-4/5" />
-                <div className="h-4 bg-emerald-100 rounded-full w-5/6" />
-                <div className="h-4 bg-emerald-100 rounded-full w-2/3" />
+                <div className="h-4 bg-emerald-100 dark:bg-emerald-900/50 rounded-full w-full" />
+                <div className="h-4 bg-emerald-100 dark:bg-emerald-900/50 rounded-full w-4/5" />
+                <div className="h-4 bg-emerald-100 dark:bg-emerald-900/50 rounded-full w-5/6" />
+                <div className="h-4 bg-emerald-100 dark:bg-emerald-900/50 rounded-full w-2/3" />
               </div>
-              <p className="text-sm text-zinc-500">Running test...</p>
+              <p className="text-sm text-zinc-500 dark:text-zinc-400">Running test...</p>
             </div>
           </div>
         )}
 
         {testOutput && !isTesting && (
           <div className="space-y-2">
-            <h4 className="text-sm font-medium text-zinc-700">
+            <h4 className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
               Test Output
             </h4>
-            <pre className="p-4 bg-emerald-50/50 border border-emerald-200 rounded-xl text-sm font-mono whitespace-pre-wrap overflow-x-auto max-h-64 shadow-sm">
+            <pre className="p-4 bg-emerald-50/50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-xl text-sm font-mono whitespace-pre-wrap overflow-x-auto max-h-64 shadow-sm text-zinc-900 dark:text-zinc-100">
               {testOutput}
             </pre>
-            <p className="text-xs text-zinc-500">
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">
               Click "Use as Output" to copy this to Current Output for the next iteration.
             </p>
           </div>
