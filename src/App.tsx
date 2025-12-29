@@ -12,8 +12,9 @@ export default function App() {
   const darkMode = useAppStore((state) => state.darkMode);
 
   return (
-    <div className={`h-screen flex flex-col bg-zinc-100 dark:bg-zinc-950 ${darkMode ? 'dark' : ''}`}>
-      <Header />
+    <div className={darkMode ? 'dark' : ''}>
+      <div className="h-screen flex flex-col bg-zinc-100 dark:bg-zinc-950">
+        <Header />
 
       <div className="flex-1 flex overflow-hidden">
         <Sidebar />
@@ -41,6 +42,7 @@ export default function App() {
             <TestPanel />
           </div>
         </main>
+      </div>
       </div>
     </div>
   );
