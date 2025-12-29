@@ -48,25 +48,25 @@ export function RewritePanel() {
         <>
           <button
             onClick={handleClear}
-            className={`${iconBtnClass} hover:bg-red-50 border border-zinc-200`}
+            className={`${iconBtnClass} hover:bg-red-50 dark:hover:bg-red-900/30 border border-zinc-200 dark:border-zinc-600`}
             title="Clear"
           >
-            <Trash2 className="h-4 w-4 text-red-500" />
+            <Trash2 className="h-4 w-4 text-red-500 dark:text-red-400" />
           </button>
           <button
             onClick={handleCopy}
-            className={`${iconBtnClass} border border-zinc-200 hover:bg-zinc-50`}
+            className={`${iconBtnClass} border border-zinc-200 dark:border-zinc-600 hover:bg-zinc-50 dark:hover:bg-zinc-700`}
             title={copied ? "Copied!" : "Copy to clipboard"}
           >
             {copied ? (
               <Check className="h-4 w-4 text-green-500 animate-checkmark" />
             ) : (
-              <Copy className="h-4 w-4 text-zinc-500" />
+              <Copy className="h-4 w-4 text-zinc-500 dark:text-zinc-400" />
             )}
           </button>
           <button
             onClick={handleAcceptNewPrompt}
-            className={`${secondaryBtnClass} border-indigo-300 text-indigo-700 hover:bg-indigo-50`}
+            className={`${secondaryBtnClass} border-indigo-300 dark:border-indigo-500 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30`}
           >
             Accept & Iterate
           </button>
@@ -79,7 +79,7 @@ export function RewritePanel() {
           ${primaryBtnClass}
           ${canRewrite && !isRewriting
             ? 'bg-indigo-500 text-white hover:bg-indigo-600'
-            : 'bg-zinc-100 text-zinc-400 cursor-not-allowed shadow-none'
+            : 'bg-zinc-200 dark:bg-zinc-700 text-zinc-400 cursor-not-allowed shadow-none'
           }
         `}
       >
@@ -258,10 +258,10 @@ export function RewritePanel() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setIsExpanded(true)}
-            className="p-2 hover:bg-zinc-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-700 rounded-lg transition-colors"
             title="Expand"
           >
-            <Maximize2 className="h-4 w-4 text-zinc-500" />
+            <Maximize2 className="h-4 w-4 text-zinc-500 dark:text-zinc-400" />
           </button>
           {actionButtons}
         </div>

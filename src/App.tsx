@@ -12,7 +12,7 @@ export default function App() {
   const darkMode = useAppStore((state) => state.darkMode);
 
   return (
-    <div className={`h-screen flex flex-col bg-zinc-100 dark:bg-zinc-900 ${darkMode ? 'dark' : ''}`}>
+    <div className={`h-screen flex flex-col bg-zinc-100 dark:bg-zinc-950 ${darkMode ? 'dark' : ''}`}>
       <Header />
 
       <div className="flex-1 flex overflow-hidden">

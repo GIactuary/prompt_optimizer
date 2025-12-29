@@ -73,8 +73,8 @@ export function TestPanel() {
               onClick={() => setShowPreview(!showPreview)}
               className={`${iconBtnClass} border ${
                 showPreview
-                  ? 'border-emerald-300 text-emerald-600 bg-emerald-50'
-                  : 'border-zinc-200 text-zinc-500 hover:bg-zinc-50'
+                  ? 'border-emerald-300 dark:border-emerald-500 text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30'
+                  : 'border-zinc-200 dark:border-zinc-600 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-700'
               }`}
               title={showPreview ? "Hide preview" : "Preview prompt"}
             >
@@ -84,20 +84,20 @@ export function TestPanel() {
           {testOutput && (
             <button
               onClick={handleCopy}
-              className={`${iconBtnClass} border border-zinc-200 hover:bg-zinc-50`}
+              className={`${iconBtnClass} border border-zinc-200 dark:border-zinc-600 hover:bg-zinc-50 dark:hover:bg-zinc-700`}
               title={copied ? "Copied!" : "Copy to clipboard"}
             >
               {copied ? (
                 <Check className="h-4 w-4 text-emerald-500 animate-checkmark" />
               ) : (
-                <Copy className="h-4 w-4 text-zinc-500" />
+                <Copy className="h-4 w-4 text-zinc-500 dark:text-zinc-400" />
               )}
             </button>
           )}
           {testOutput && (
             <button
               onClick={handleUseAsCurrentOutput}
-              className={`${secondaryBtnClass} border-emerald-300 text-emerald-700 hover:bg-emerald-50`}
+              className={`${secondaryBtnClass} border-emerald-300 dark:border-emerald-500 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/30`}
             >
               Use as Output
             </button>
@@ -109,7 +109,7 @@ export function TestPanel() {
               ${primaryBtnClass}
               ${canTest && !isTesting
                 ? 'bg-emerald-500 text-white hover:bg-emerald-600'
-                : 'bg-zinc-100 text-zinc-400 cursor-not-allowed shadow-none'
+                : 'bg-zinc-200 dark:bg-zinc-700 text-zinc-400 cursor-not-allowed shadow-none'
               }
             `}
           >

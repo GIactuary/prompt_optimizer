@@ -112,7 +112,7 @@ export function AnalysisPanel() {
                     ${primaryBtnClass}
                     ${canAnalyze && !isAnalyzing
                       ? 'bg-amber-500 text-white hover:bg-amber-600'
-                      : 'bg-zinc-100 dark:bg-zinc-700 text-zinc-400 cursor-not-allowed shadow-none'
+                      : 'bg-zinc-200 dark:bg-zinc-700 text-zinc-400 cursor-not-allowed shadow-none'
                     }
                   `}
                 >
@@ -183,7 +183,7 @@ export function AnalysisPanel() {
               ${primaryBtnClass}
               ${canAnalyze && !isAnalyzing
                 ? 'bg-amber-500 text-white hover:bg-amber-600'
-                : 'bg-zinc-100 dark:bg-zinc-700 text-zinc-400 cursor-not-allowed shadow-none'
+                : 'bg-zinc-200 dark:bg-zinc-700 text-zinc-400 cursor-not-allowed shadow-none'
               }
             `}
           >
