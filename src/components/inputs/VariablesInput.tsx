@@ -22,7 +22,7 @@ export function VariablesInput() {
         </label>
         <div className="flex items-center gap-2">
           {!isValidJson() && (
-            <span className="text-xs text-red-500">Invalid JSON</span>
+            <span className="text-xs text-red-500 font-medium">Invalid JSON</span>
           )}
           <span className="text-xs text-zinc-400">
             {inputVariables.length} chars
@@ -34,9 +34,14 @@ export function VariablesInput() {
         onChange={(e) => setInputVariables(e.target.value)}
         placeholder='{"company": "AAPL", "period": "Q3 2024"}'
         className={`
-          flex-1 p-4 text-sm border rounded-lg resize-none font-mono bg-zinc-50
-          focus:ring-2 focus:ring-indigo-500 focus:border-transparent
-          ${!isValidJson() ? 'border-red-300' : 'border-zinc-300'}
+          flex-1 p-4 text-sm border rounded-xl resize-none font-mono bg-zinc-50 shadow-sm
+          transition-all duration-200
+          hover:shadow
+          focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500/50 focus:outline-none focus:bg-white
+          ${!isValidJson()
+            ? 'border-red-300 hover:border-red-400 focus:border-red-400 focus:ring-red-500/50'
+            : 'border-zinc-200 hover:border-zinc-300 focus:border-indigo-300'
+          }
         `}
       />
     </div>

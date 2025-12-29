@@ -17,12 +17,15 @@ export function ApiKeyInput() {
           value={apiKey}
           onChange={(e) => setApiKey(e.target.value)}
           placeholder="sk-or-..."
-          className="w-full p-3 pr-10 text-sm border border-zinc-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent font-mono"
+          className="w-full p-3 pr-10 text-sm border border-zinc-200 rounded-xl font-mono shadow-sm
+            transition-all duration-200
+            hover:border-zinc-300 hover:shadow
+            focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500/50 focus:border-indigo-300 focus:outline-none"
         />
         <button
           type="button"
           onClick={() => setShowKey(!showKey)}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 transition-colors"
         >
           {showKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
         </button>

@@ -17,7 +17,10 @@ export function OutputInput() {
         value={currentOutput}
         onChange={(e) => setCurrentOutput(e.target.value)}
         placeholder="Paste the output your current prompt produces..."
-        className="flex-1 p-4 text-sm border border-zinc-300 rounded-lg resize-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent font-mono bg-zinc-50"
+        className="flex-1 p-4 text-sm border border-zinc-200 rounded-xl resize-none font-mono bg-zinc-50 shadow-sm
+          transition-all duration-200
+          hover:border-zinc-300 hover:shadow
+          focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500/50 focus:border-indigo-300 focus:outline-none focus:bg-white"
       />
     </div>
   );
