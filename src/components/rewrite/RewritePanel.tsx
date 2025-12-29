@@ -36,26 +36,31 @@ export function RewritePanel() {
     setNewPrompt('');
   };
 
+  // Consistent button styles
+  const iconBtnClass = "h-9 w-9 flex items-center justify-center rounded-md transition-colors";
+  const secondaryBtnClass = "h-9 px-4 text-sm font-medium rounded-md border flex items-center justify-center gap-2 transition-colors";
+  const primaryBtnClass = "h-9 px-4 text-sm font-medium rounded-md flex items-center justify-center gap-2 transition-colors";
+
   const actionButtons = (
     <>
       {newPrompt && (
         <>
           <button
             onClick={handleClear}
-            className="p-1.5 hover:bg-red-50 rounded-md transition-colors"
+            className={`${iconBtnClass} hover:bg-red-50 border border-zinc-200`}
             title="Clear"
           >
             <Trash2 className="h-4 w-4 text-red-500" />
           </button>
           <button
             onClick={handleAcceptNewPrompt}
-            className="px-3 py-1.5 text-sm font-medium rounded-md border border-green-300 text-green-700 hover:bg-green-50 flex items-center gap-2"
+            className={`${secondaryBtnClass} border-green-300 text-green-700 hover:bg-green-50`}
           >
             Accept & Iterate
           </button>
           <button
             onClick={handleCopy}
-            className="px-3 py-1.5 text-sm font-medium rounded-md border border-zinc-300 hover:bg-zinc-50 flex items-center gap-2"
+            className={`${secondaryBtnClass} border-zinc-300 text-zinc-700 hover:bg-zinc-50`}
           >
             {copied ? (
               <>
@@ -75,7 +80,7 @@ export function RewritePanel() {
         onClick={runRewrite}
         disabled={!canRewrite || isRewriting}
         className={`
-          px-4 py-1.5 text-sm font-medium rounded-md flex items-center gap-2
+          ${primaryBtnClass}
           ${canRewrite && !isRewriting
             ? 'bg-green-600 text-white hover:bg-green-700'
             : 'bg-zinc-100 text-zinc-400 cursor-not-allowed'
@@ -227,10 +232,10 @@ export function RewritePanel() {
           <PenLine className="h-4 w-4 text-green-500" />
           <h3 className="font-medium text-zinc-900">Step 2: Rewrite</h3>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <button
             onClick={() => setIsExpanded(true)}
-            className="p-1.5 hover:bg-zinc-100 rounded-md transition-colors"
+            className={`${iconBtnClass} hover:bg-zinc-100 border border-zinc-200`}
             title="Expand"
           >
             <Maximize2 className="h-4 w-4 text-zinc-500" />
