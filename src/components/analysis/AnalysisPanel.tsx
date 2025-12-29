@@ -81,7 +81,7 @@ export function AnalysisPanel() {
     return (
       <>
         {/* Placeholder to maintain grid layout */}
-        <div className="flex flex-col h-full border border-zinc-200 rounded-xl bg-zinc-100/50 border-l-4 border-l-amber-400">
+        <div className="flex flex-col h-full border border-zinc-200 dark:border-zinc-700 rounded-xl bg-zinc-100/50 dark:bg-zinc-800/50 border-l-4 border-l-amber-400">
           <div className="flex items-center justify-center h-full text-zinc-400 text-sm">
             Panel expanded - click minimize to return
           </div>
@@ -89,20 +89,20 @@ export function AnalysisPanel() {
 
         {/* Fullscreen overlay */}
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-6">
-          <div className="bg-white rounded-2xl shadow-2xl w-full h-full max-w-6xl max-h-[90vh] flex flex-col border-l-4 border-l-amber-400 overflow-hidden">
+          <div className="bg-white dark:bg-zinc-800 rounded-2xl shadow-2xl w-full h-full max-w-6xl max-h-[90vh] flex flex-col border-l-4 border-l-amber-400 overflow-hidden">
             {/* Progress bar when loading */}
             {isAnalyzing && (
-              <div className="absolute top-0 left-0 right-0 h-1 bg-amber-100 overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-amber-100 dark:bg-amber-900/50 overflow-hidden">
                 <div className="h-full bg-amber-500 animate-progress" />
               </div>
             )}
 
-            <div className="flex items-center justify-between p-4 border-b border-zinc-200 bg-gradient-to-r from-amber-50/50 to-white">
+            <div className="flex items-center justify-between p-4 border-b border-zinc-200 dark:border-zinc-700 bg-gradient-to-r from-amber-50/50 to-white dark:from-amber-900/20 dark:to-zinc-800">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-amber-100">
-                  <Sparkles className="h-5 w-5 text-amber-600" />
+                <div className="p-2 rounded-xl bg-amber-100 dark:bg-amber-900/50">
+                  <Sparkles className="h-5 w-5 text-amber-600 dark:text-amber-400" />
                 </div>
-                <h3 className="text-lg font-semibold text-zinc-900">Step 1: Analysis</h3>
+                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Step 1: Analysis</h3>
               </div>
               <div className="flex items-center gap-2">
                 <button
@@ -112,7 +112,7 @@ export function AnalysisPanel() {
                     ${primaryBtnClass}
                     ${canAnalyze && !isAnalyzing
                       ? 'bg-amber-500 text-white hover:bg-amber-600'
-                      : 'bg-zinc-100 text-zinc-400 cursor-not-allowed shadow-none'
+                      : 'bg-zinc-100 dark:bg-zinc-700 text-zinc-400 cursor-not-allowed shadow-none'
                     }
                   `}
                 >
@@ -127,17 +127,17 @@ export function AnalysisPanel() {
                 </button>
                 <button
                   onClick={() => setIsExpanded(false)}
-                  className="p-2 hover:bg-zinc-100 rounded-lg transition-colors"
+                  className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-700 rounded-lg transition-colors"
                   title="Minimize"
                 >
-                  <Minimize2 className="h-5 w-5 text-zinc-500" />
+                  <Minimize2 className="h-5 w-5 text-zinc-500 dark:text-zinc-400" />
                 </button>
                 <button
                   onClick={() => setIsExpanded(false)}
-                  className="p-2 hover:bg-zinc-100 rounded-lg transition-colors"
+                  className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-700 rounded-lg transition-colors"
                   title="Close"
                 >
-                  <X className="h-5 w-5 text-zinc-500" />
+                  <X className="h-5 w-5 text-zinc-500 dark:text-zinc-400" />
                 </button>
               </div>
             </div>
@@ -153,28 +153,28 @@ export function AnalysisPanel() {
 
   // Normal view
   return (
-    <div className="flex flex-col h-full border border-zinc-200 rounded-xl bg-white shadow-sm hover:shadow-md transition-shadow duration-200 border-l-4 border-l-amber-400 overflow-hidden relative">
+    <div className="flex flex-col h-full border border-zinc-200 dark:border-zinc-700 rounded-xl bg-white dark:bg-zinc-800 shadow-sm hover:shadow-md transition-shadow duration-200 border-l-4 border-l-amber-400 overflow-hidden relative">
       {/* Progress bar when loading */}
       {isAnalyzing && (
-        <div className="absolute top-0 left-0 right-0 h-1 bg-amber-100 overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-1 bg-amber-100 dark:bg-amber-900/50 overflow-hidden">
           <div className="h-full bg-amber-500 animate-progress" />
         </div>
       )}
 
-      <div className="flex items-center justify-between p-3 border-b border-zinc-200 bg-gradient-to-r from-amber-50/50 to-white">
+      <div className="flex items-center justify-between p-3 border-b border-zinc-200 dark:border-zinc-700 bg-gradient-to-r from-amber-50/50 to-white dark:from-amber-900/20 dark:to-zinc-800">
         <div className="flex items-center gap-2">
-          <div className="p-1.5 rounded-lg bg-amber-100">
-            <Sparkles className="h-4 w-4 text-amber-600" />
+          <div className="p-1.5 rounded-lg bg-amber-100 dark:bg-amber-900/50">
+            <Sparkles className="h-4 w-4 text-amber-600 dark:text-amber-400" />
           </div>
-          <h3 className="font-semibold text-zinc-900">Step 1: Analysis</h3>
+          <h3 className="font-semibold text-zinc-900 dark:text-zinc-100">Step 1: Analysis</h3>
         </div>
         <div className="flex items-center gap-2">
           <button
             onClick={() => setIsExpanded(true)}
-            className="p-2 hover:bg-zinc-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-700 rounded-lg transition-colors"
             title="Expand"
           >
-            <Maximize2 className="h-4 w-4 text-zinc-500" />
+            <Maximize2 className="h-4 w-4 text-zinc-500 dark:text-zinc-400" />
           </button>
           <button
             onClick={runAnalysis}
@@ -183,7 +183,7 @@ export function AnalysisPanel() {
               ${primaryBtnClass}
               ${canAnalyze && !isAnalyzing
                 ? 'bg-amber-500 text-white hover:bg-amber-600'
-                : 'bg-zinc-100 text-zinc-400 cursor-not-allowed shadow-none'
+                : 'bg-zinc-100 dark:bg-zinc-700 text-zinc-400 cursor-not-allowed shadow-none'
               }
             `}
           >

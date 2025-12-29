@@ -239,20 +239,20 @@ export function RewritePanel() {
 
   // Normal view
   return (
-    <div className="flex flex-col h-full border border-zinc-200 rounded-xl bg-white shadow-sm hover:shadow-md transition-shadow duration-200 border-l-4 border-l-indigo-400 overflow-hidden relative">
+    <div className="flex flex-col h-full border border-zinc-200 dark:border-zinc-700 rounded-xl bg-white dark:bg-zinc-800 shadow-sm hover:shadow-md transition-shadow duration-200 border-l-4 border-l-indigo-400 overflow-hidden relative">
       {/* Progress bar when loading */}
       {isRewriting && (
-        <div className="absolute top-0 left-0 right-0 h-1 bg-indigo-100 overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-1 bg-indigo-100 dark:bg-indigo-900/50 overflow-hidden">
           <div className="h-full bg-indigo-500 animate-progress" />
         </div>
       )}
 
-      <div className="flex items-center justify-between p-3 border-b border-zinc-200 bg-gradient-to-r from-indigo-50/50 to-white">
+      <div className="flex items-center justify-between p-3 border-b border-zinc-200 dark:border-zinc-700 bg-gradient-to-r from-indigo-50/50 to-white dark:from-indigo-900/20 dark:to-zinc-800">
         <div className="flex items-center gap-2">
-          <div className="p-1.5 rounded-lg bg-indigo-100">
-            <PenLine className="h-4 w-4 text-indigo-600" />
+          <div className="p-1.5 rounded-lg bg-indigo-100 dark:bg-indigo-900/50">
+            <PenLine className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
           </div>
-          <h3 className="font-semibold text-zinc-900">Step 2: Rewrite</h3>
+          <h3 className="font-semibold text-zinc-900 dark:text-zinc-100">Step 2: Rewrite</h3>
         </div>
         <div className="flex items-center gap-2">
           <button

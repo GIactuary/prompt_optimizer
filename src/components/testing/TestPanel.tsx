@@ -52,20 +52,20 @@ export function TestPanel() {
   const primaryBtnClass = "h-9 px-4 text-sm font-medium rounded-lg flex items-center justify-center gap-2 shadow-sm hover:shadow-md active:scale-[0.98] transition-all duration-150 whitespace-nowrap flex-shrink-0";
 
   return (
-    <div className="flex flex-col h-full border border-zinc-200 rounded-xl bg-white shadow-sm hover:shadow-md transition-shadow duration-200 border-l-4 border-l-emerald-400 overflow-hidden relative">
+    <div className="flex flex-col h-full border border-zinc-200 dark:border-zinc-700 rounded-xl bg-white dark:bg-zinc-800 shadow-sm hover:shadow-md transition-shadow duration-200 border-l-4 border-l-emerald-400 overflow-hidden relative">
       {/* Progress bar when loading */}
       {isTesting && (
-        <div className="absolute top-0 left-0 right-0 h-1 bg-emerald-100 overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-1 bg-emerald-100 dark:bg-emerald-900/50 overflow-hidden">
           <div className="h-full bg-emerald-500 animate-progress" />
         </div>
       )}
 
-      <div className="flex items-center justify-between p-3 border-b border-zinc-200 bg-gradient-to-r from-emerald-50/50 to-white">
+      <div className="flex items-center justify-between p-3 border-b border-zinc-200 dark:border-zinc-700 bg-gradient-to-r from-emerald-50/50 to-white dark:from-emerald-900/20 dark:to-zinc-800">
         <div className="flex items-center gap-2">
-          <div className="p-1.5 rounded-lg bg-emerald-100">
-            <Play className="h-4 w-4 text-emerald-600" />
+          <div className="p-1.5 rounded-lg bg-emerald-100 dark:bg-emerald-900/50">
+            <Play className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
           </div>
-          <h3 className="font-semibold text-zinc-900">Step 3: Test</h3>
+          <h3 className="font-semibold text-zinc-900 dark:text-zinc-100">Step 3: Test</h3>
         </div>
         <div className="flex items-center gap-2">
           {newPrompt && (

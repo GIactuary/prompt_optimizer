@@ -10,6 +10,9 @@ import {
 } from '@/services/prompts';
 
 interface AppState {
+  // UI
+  darkMode: boolean;
+
   // Configuration
   goal: string;
   role: string;
@@ -38,6 +41,8 @@ interface AppState {
   testError: string | null;
 
   // Actions
+  setDarkMode: (darkMode: boolean) => void;
+  toggleDarkMode: () => void;
   setGoal: (goal: string) => void;
   setRole: (role: string) => void;
   setModelName: (model: string) => void;
@@ -65,6 +70,7 @@ export const useAppStore = create<AppState>()(
   persist(
     (set, get) => ({
       // Initial state
+      darkMode: false,
       goal: '',
       role: '',
       modelName: 'anthropic/claude-sonnet-4-20250514',
@@ -84,6 +90,8 @@ export const useAppStore = create<AppState>()(
       testError: null,
 
       // Setters
+      setDarkMode: (darkMode) => set({ darkMode }),
+      toggleDarkMode: () => set((state) => ({ darkMode: !state.darkMode })),
       setGoal: (goal) => set({ goal }),
       setRole: (role) => set({ role }),
       setModelName: (model) => set({ modelName: model }),
@@ -201,6 +209,7 @@ export const useAppStore = create<AppState>()(
       name: 'prompt-optimizer-storage',
       // Only persist these fields (not loading states or errors)
       partialize: (state) => ({
+        darkMode: state.darkMode,
         goal: state.goal,
         role: state.role,
         modelName: state.modelName,
