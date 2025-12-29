@@ -13,6 +13,7 @@ export function RewritePanel() {
     runRewrite,
     setCurrentPrompt,
     setNewPrompt,
+    setTestOutput,
     apiKey,
     darkMode
   } = useAppStore();
@@ -30,7 +31,7 @@ export function RewritePanel() {
 
   const handleAcceptNewPrompt = () => {
     setCurrentPrompt(newPrompt);
-    setNewPrompt('');
+    setTestOutput('');      // Only clear test output for fresh test
   };
 
   const handleClear = () => {

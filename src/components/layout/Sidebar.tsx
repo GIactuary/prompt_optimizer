@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Settings, Cpu } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Settings, Cpu, FileCode } from 'lucide-react';
 import { GoalInput } from '../inputs/GoalInput';
 import { RoleInput } from '../inputs/RoleInput';
+import { SystemPromptsInput } from '../inputs/SystemPromptsInput';
 import { ModelSelector } from '../inputs/ModelSelector';
 import { TemperatureInput } from '../inputs/TemperatureInput';
 import { ApiKeyInput } from '../inputs/ApiKeyInput';
@@ -46,7 +47,27 @@ export function Sidebar() {
             <RoleInput />
           </div>
 
-          {/* Divider */}
+          {/* System Prompts Divider */}
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-zinc-200/60 dark:border-zinc-700" />
+            </div>
+            <div className="relative flex justify-center">
+              <span className="bg-gradient-to-b from-zinc-50 to-white dark:from-zinc-800 dark:to-zinc-800 px-2">
+                <div className="flex items-center gap-1.5">
+                  <FileCode className="h-3 w-3 text-zinc-400" />
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">
+                    System Prompts
+                  </span>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          {/* System Prompts Section */}
+          <SystemPromptsInput />
+
+          {/* LLM Settings Divider */}
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-zinc-200/60 dark:border-zinc-700" />

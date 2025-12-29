@@ -20,6 +20,10 @@ interface AppState {
   temperature: number;
   apiKey: string;
 
+  // System Prompts
+  analysisSystemPrompt: string;
+  rewriteSystemPrompt: string;
+
   // Inputs
   currentPrompt: string;
   inputVariables: string;
@@ -48,6 +52,8 @@ interface AppState {
   setModelName: (model: string) => void;
   setTemperature: (temp: number) => void;
   setApiKey: (key: string) => void;
+  setAnalysisSystemPrompt: (prompt: string) => void;
+  setRewriteSystemPrompt: (prompt: string) => void;
   setCurrentPrompt: (prompt: string) => void;
   setInputVariables: (vars: string) => void;
   setCurrentOutput: (output: string) => void;
@@ -76,6 +82,8 @@ export const useAppStore = create<AppState>()(
       modelName: 'anthropic/claude-sonnet-4-20250514',
       temperature: 0.3,
       apiKey: '',
+      analysisSystemPrompt: ANALYSIS_SYSTEM_PROMPT,
+      rewriteSystemPrompt: REWRITE_SYSTEM_PROMPT,
       currentPrompt: '',
       inputVariables: '',
       currentOutput: '',
@@ -97,6 +105,8 @@ export const useAppStore = create<AppState>()(
       setModelName: (model) => set({ modelName: model }),
       setTemperature: (temp) => set({ temperature: temp }),
       setApiKey: (key) => set({ apiKey: key }),
+      setAnalysisSystemPrompt: (prompt) => set({ analysisSystemPrompt: prompt }),
+      setRewriteSystemPrompt: (prompt) => set({ rewriteSystemPrompt: prompt }),
       setCurrentPrompt: (prompt) => set({ currentPrompt: prompt }),
       setInputVariables: (vars) => set({ inputVariables: vars }),
       setCurrentOutput: (output) => set({ currentOutput: output }),
@@ -127,7 +137,7 @@ export const useAppStore = create<AppState>()(
               temperature: state.temperature,
               apiKey: state.apiKey,
             },
-            ANALYSIS_SYSTEM_PROMPT,
+            state.analysisSystemPrompt,
             buildAnalysisUserPrompt({
               goal: state.goal,
               role: state.role,
@@ -159,7 +169,7 @@ export const useAppStore = create<AppState>()(
               temperature: state.temperature,
               apiKey: state.apiKey,
             },
-            REWRITE_SYSTEM_PROMPT,
+            state.rewriteSystemPrompt,
             buildRewriteUserPrompt({
               currentPrompt: state.currentPrompt,
               improvements: state.improvements,
@@ -215,6 +225,8 @@ export const useAppStore = create<AppState>()(
         modelName: state.modelName,
         temperature: state.temperature,
         apiKey: state.apiKey,
+        analysisSystemPrompt: state.analysisSystemPrompt,
+        rewriteSystemPrompt: state.rewriteSystemPrompt,
         currentPrompt: state.currentPrompt,
         inputVariables: state.inputVariables,
         currentOutput: state.currentOutput,
