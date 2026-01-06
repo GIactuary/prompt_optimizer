@@ -4,7 +4,7 @@ import { useAppStore } from '@/store/appStore';
 
 export function TestPanel() {
   const {
-    newPrompt,
+    currentPrompt,
     inputVariables,
     testOutput,
     isTesting,
@@ -18,7 +18,7 @@ export function TestPanel() {
   const [showPreview, setShowPreview] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const canTest = newPrompt && apiKey;
+  const canTest = currentPrompt && apiKey;
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(testOutput);
@@ -30,21 +30,12 @@ export function TestPanel() {
     setCurrentOutput(testOutput);
   };
 
-  // Get the processed prompt with variables substituted
-  const getProcessedPrompt = () => {
-    let processedPrompt = newPrompt;
-
-    try {
-      const variables = JSON.parse(inputVariables || '{}');
-      for (const [key, value] of Object.entries(variables)) {
-        const regex = new RegExp(`\\{\\{${key}\\}\\}|\\{${key}\\}`, 'g');
-        processedPrompt = processedPrompt.replace(regex, String(value));
-      }
-    } catch {
-      // If JSON parsing fails, use prompt as-is
-    }
-
-    return processedPrompt;
+  // Preview what will be sent to LLM
+  const getPreview = () => {
+    return {
+      system: currentPrompt,
+      user: inputVariables || '{}',
+    };
   };
 
   // Button styles
@@ -54,7 +45,7 @@ export function TestPanel() {
 
   const actionButtons = (
     <>
-      {newPrompt && (
+      {currentPrompt && (
         <button
           onClick={() => setShowPreview(!showPreview)}
           className={`${iconBtnClass} border ${
@@ -123,14 +114,24 @@ export function TestPanel() {
         </div>
       )}
 
-      {showPreview && newPrompt && (
-        <div className="mb-4">
-          <h4 className="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-            Prompt Preview (with variables substituted)
-          </h4>
-          <pre className={`p-4 bg-emerald-50/50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-xl text-sm font-mono whitespace-pre-wrap overflow-x-auto shadow-sm text-zinc-900 dark:text-zinc-100 ${isExpanded ? 'max-h-[40vh]' : 'max-h-40'}`}>
-            {getProcessedPrompt()}
-          </pre>
+      {showPreview && currentPrompt && (
+        <div className="mb-4 space-y-3">
+          <div>
+            <h4 className="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+              System Message (Instructions)
+            </h4>
+            <pre className={`p-4 bg-blue-50/50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl text-sm font-mono whitespace-pre-wrap overflow-x-auto shadow-sm text-zinc-900 dark:text-zinc-100 ${isExpanded ? 'max-h-[30vh]' : 'max-h-32'}`}>
+              {getPreview().system}
+            </pre>
+          </div>
+          <div>
+            <h4 className="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+              User Message (Input Data)
+            </h4>
+            <pre className={`p-4 bg-emerald-50/50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-xl text-sm font-mono whitespace-pre-wrap overflow-x-auto shadow-sm text-zinc-900 dark:text-zinc-100 ${isExpanded ? 'max-h-[30vh]' : 'max-h-32'}`}>
+              {getPreview().user}
+            </pre>
+          </div>
         </div>
       )}
 
@@ -140,7 +141,7 @@ export function TestPanel() {
             <div className="text-center space-y-2">
               <p className="font-medium">Requirements to test:</p>
               <ul className="text-xs space-y-1">
-                {!newPrompt && <li className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-600" />Complete Step 2 (Rewrite) first</li>}
+                {!currentPrompt && <li className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-600" />Add a prompt in Current Prompt</li>}
                 {!apiKey && <li className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-600" />API Key (sidebar)</li>}
               </ul>
             </div>

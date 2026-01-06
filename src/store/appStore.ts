@@ -6,8 +6,19 @@ import {
   buildAnalysisUserPrompt,
   REWRITE_SYSTEM_PROMPT,
   buildRewriteUserPrompt,
-  buildTestUserPrompt,
+  buildTestMessages,
 } from '@/services/prompts';
+
+// Strip markdown code blocks from LLM response
+function stripMarkdownCodeBlocks(text: string): string {
+  // Remove ```language\n...\n``` or ```\n...\n```
+  const codeBlockRegex = /^```(?:\w+)?\n?([\s\S]*?)\n?```$/;
+  const match = text.trim().match(codeBlockRegex);
+  if (match) {
+    return match[1].trim();
+  }
+  return text.trim();
+}
 
 interface AppState {
   // UI
@@ -19,10 +30,6 @@ interface AppState {
   modelName: string;
   temperature: number;
   apiKey: string;
-
-  // System Prompts
-  analysisSystemPrompt: string;
-  rewriteSystemPrompt: string;
 
   // Inputs
   currentPrompt: string;
@@ -52,8 +59,6 @@ interface AppState {
   setModelName: (model: string) => void;
   setTemperature: (temp: number) => void;
   setApiKey: (key: string) => void;
-  setAnalysisSystemPrompt: (prompt: string) => void;
-  setRewriteSystemPrompt: (prompt: string) => void;
   setCurrentPrompt: (prompt: string) => void;
   setInputVariables: (vars: string) => void;
   setCurrentOutput: (output: string) => void;
@@ -82,8 +87,6 @@ export const useAppStore = create<AppState>()(
       modelName: 'anthropic/claude-sonnet-4-20250514',
       temperature: 0.3,
       apiKey: '',
-      analysisSystemPrompt: ANALYSIS_SYSTEM_PROMPT,
-      rewriteSystemPrompt: REWRITE_SYSTEM_PROMPT,
       currentPrompt: '',
       inputVariables: '',
       currentOutput: '',
@@ -105,8 +108,6 @@ export const useAppStore = create<AppState>()(
       setModelName: (model) => set({ modelName: model }),
       setTemperature: (temp) => set({ temperature: temp }),
       setApiKey: (key) => set({ apiKey: key }),
-      setAnalysisSystemPrompt: (prompt) => set({ analysisSystemPrompt: prompt }),
-      setRewriteSystemPrompt: (prompt) => set({ rewriteSystemPrompt: prompt }),
       setCurrentPrompt: (prompt) => set({ currentPrompt: prompt }),
       setInputVariables: (vars) => set({ inputVariables: vars }),
       setCurrentOutput: (output) => set({ currentOutput: output }),
@@ -137,7 +138,7 @@ export const useAppStore = create<AppState>()(
               temperature: state.temperature,
               apiKey: state.apiKey,
             },
-            state.analysisSystemPrompt,
+            ANALYSIS_SYSTEM_PROMPT,
             buildAnalysisUserPrompt({
               goal: state.goal,
               role: state.role,
@@ -169,14 +170,15 @@ export const useAppStore = create<AppState>()(
               temperature: state.temperature,
               apiKey: state.apiKey,
             },
-            state.rewriteSystemPrompt,
+            REWRITE_SYSTEM_PROMPT,
             buildRewriteUserPrompt({
               currentPrompt: state.currentPrompt,
               improvements: state.improvements,
+              inputVariables: state.inputVariables,
             })
           );
 
-          set({ newPrompt: response.content, isRewriting: false });
+          set({ newPrompt: stripMarkdownCodeBlocks(response.content), isRewriting: false });
         } catch (error: unknown) {
           const errorMessage = error instanceof Error ? error.message : 'Rewrite failed';
           set({
@@ -192,17 +194,20 @@ export const useAppStore = create<AppState>()(
         set({ isTesting: true, testError: null });
 
         try {
+          // Current Prompt = instructions (system), Input Variables = data (user)
+          const { systemPrompt, userMessage } = buildTestMessages({
+            prompt: state.currentPrompt,
+            inputVariables: state.inputVariables,
+          });
+
           const response = await callLLM(
             {
               modelName: state.modelName,
               temperature: state.temperature,
               apiKey: state.apiKey,
             },
-            '', // No system prompt for raw test
-            buildTestUserPrompt({
-              prompt: state.newPrompt,
-              inputVariables: state.inputVariables,
-            })
+            systemPrompt,
+            userMessage
           );
 
           set({ testOutput: response.content, isTesting: false });
@@ -225,8 +230,6 @@ export const useAppStore = create<AppState>()(
         modelName: state.modelName,
         temperature: state.temperature,
         apiKey: state.apiKey,
-        analysisSystemPrompt: state.analysisSystemPrompt,
-        rewriteSystemPrompt: state.rewriteSystemPrompt,
         currentPrompt: state.currentPrompt,
         inputVariables: state.inputVariables,
         currentOutput: state.currentOutput,

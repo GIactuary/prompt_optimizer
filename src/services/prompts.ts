@@ -1,13 +1,31 @@
-export const ANALYSIS_SYSTEM_PROMPT = `You are an expert prompt engineer with deep knowledge of LLM behavior, instruction design, and output optimization.
+export const ANALYSIS_SYSTEM_PROMPT = `You are an expert prompt engineer. You diagnose why prompts produce bad outputs and provide exact fixes.
 
-Your role is to analyze prompts and their outputs against specific goals, identifying concrete improvements.
+YOU RECEIVE:
+1. THE PROMPT - What was sent to the LLM
+2. THE INPUTS - Data injected into the prompt
+3. THE OUTPUT - What the LLM produced
 
-Guidelines:
-- Be specific and actionable in your suggestions
-- Focus on clarity, structure, and goal alignment
-- Consider edge cases and potential misinterpretations
-- Prioritize high-impact improvements
-- Maintain the original intent while enhancing effectiveness`;
+FOR EACH ISSUE (most critical first):
+
+**FAILURE:** [Quote the bad output]
+
+**INPUT CHECK:** [Was the info in inputs? Quote if found]
+
+**ROOT CAUSE:** [Quote the prompt text that caused this]
+
+**FIX:**
+- CHANGE FROM: \`\`\`[exact current text]\`\`\`
+- CHANGE TO: \`\`\`[replacement text]\`\`\`
+
+**REASON:** [One sentence]
+
+---
+
+RULES:
+- Quote prompt text EXACTLY as written - CHANGE FROM must match character-for-character for automated replacement
+- Always include exact CHANGE FROM / CHANGE TO blocks
+- Never suggest vague fixes like "be clearer" - show the exact text change
+- Prioritize: Wrong outputs → Missing outputs → Format violations → Unused inputs`;
 
 export function buildAnalysisUserPrompt(params: {
   goal: string;
@@ -48,62 +66,61 @@ For each improvement:
 Format your response as a clear, numbered list of improvements. Each improvement should be self-contained and actionable.`;
 }
 
-export const REWRITE_SYSTEM_PROMPT = `You are a senior prompt engineer tasked with implementing specific improvements to prompts.
+export const REWRITE_SYSTEM_PROMPT = `You are a prompt engineer applying targeted fixes to a prompt.
 
-CRITICAL - GENERALIZATION REQUIREMENT:
-The improvements you're implementing were identified from ONE example output. However, your rewritten prompt must work for ALL possible inputs of this type, not just the example that was analyzed.
+YOU RECEIVE:
+1. THE CURRENT PROMPT - The prompt to be modified
+2. THE IMPROVEMENTS - A list of fixes, each containing CHANGE FROM and CHANGE TO blocks
+3. THE INPUT VARIABLES - The data structure that will be injected into the prompt at runtime
 
-DO NOT:
-- Hardcode specific values, dates, names, or numbers from the example
-- Add instructions that only apply to the specific case shown
-- Reverse-engineer the example output into the prompt
-- Reference specific data points that won't exist in other inputs
+YOUR TASK:
+For each improvement, find the exact CHANGE FROM text in the prompt and replace it with the CHANGE TO text.
 
-DO:
-- Write generic extraction patterns that work across all similar inputs
-- Use variable placeholders where input-specific data should go
-- Create instructions that handle the CATEGORY of problem, not the specific instance
-- Ensure the prompt produces correct output for any valid input, not just the analyzed example
+RULES:
+- Apply ALL fixes in order
+- Match CHANGE FROM text exactly - do not paraphrase or approximate
+- If exact text is not found, make the closest targeted edit that achieves the same fix
+- Preserve all parts of the prompt not mentioned in the fixes
 
-Guidelines:
-- Implement ALL suggested improvements faithfully
-- Maintain the original structure where possible
-- Ensure changes are cleanly integrated
-- Preserve any working elements that weren't flagged for improvement
-- Output ONLY the new prompt text, no explanations or markdown code blocks`;
+GENERALIZATION REQUIREMENT:
+The fixes were identified from ONE example. Your changes must work for ALL inputs:
+- Do not hardcode specific values, dates, or names from the example
+- Write generic patterns, not instance-specific instructions
+- Use the variable names from INPUT VARIABLES as placeholders (e.g., {company_name}, {date})
+- Reference the INPUT VARIABLES to understand what data is available
+
+OUTPUT:
+The complete rewritten prompt only. No explanations, no markdown code blocks, no preamble.`;
 
 export function buildRewriteUserPrompt(params: {
   currentPrompt: string;
   improvements: string;
+  inputVariables: string;
 }): string {
   return `## Current Prompt
 \`\`\`
 ${params.currentPrompt}
 \`\`\`
 
+## Input Variables
+\`\`\`json
+${params.inputVariables || '{}'}
+\`\`\`
+
 ## Improvements to Implement
 ${params.improvements}
 
 ## Your Task
-Rewrite the prompt incorporating ALL the improvements listed above. Output ONLY the new prompt text - no explanations, no markdown formatting, no code blocks. Just the raw prompt text.`;
+Rewrite the prompt incorporating ALL the improvements listed above. Use the variable names from Input Variables as placeholders where appropriate. Output ONLY the new prompt text - no explanations, no markdown formatting, no code blocks. Just the raw prompt text.`;
 }
 
-export function buildTestUserPrompt(params: {
+export function buildTestMessages(params: {
   prompt: string;
   inputVariables: string;
-}): string {
-  // Replace variables in the prompt
-  let processedPrompt = params.prompt;
-
-  try {
-    const variables = JSON.parse(params.inputVariables || '{}');
-    for (const [key, value] of Object.entries(variables)) {
-      const regex = new RegExp(`\\{\\{${key}\\}\\}|\\{${key}\\}`, 'g');
-      processedPrompt = processedPrompt.replace(regex, String(value));
-    }
-  } catch {
-    // If JSON parsing fails, use prompt as-is
-  }
-
-  return processedPrompt;
+}): { systemPrompt: string; userMessage: string } {
+  // Simple: prompt = instructions (system), variables = input (user)
+  return {
+    systemPrompt: params.prompt,
+    userMessage: params.inputVariables || '{}',
+  };
 }
